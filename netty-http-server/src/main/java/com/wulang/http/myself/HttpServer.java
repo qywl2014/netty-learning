@@ -9,6 +9,12 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import java.io.*;
 
@@ -28,8 +34,21 @@ public class HttpServer {
                                     socketChannel.pipeline().addLast(new ChannelInboundHandlerAdapter(){
                                         @Override
                                         public void channelRead(ChannelHandlerContext ctx,Object msg) throws Exception{
+
+                                            CloseableHttpClient httpClient = HttpClients.createDefault();
+                                            HttpGet get =new HttpGet("http://www.baidu.com");
+                                            CloseableHttpResponse response =httpClient.execute(get);
+                                            int statusCode =response.getStatusLine().getStatusCode();
+                                            System.out.println(statusCode);
+                                            HttpEntity entity =response.getEntity();
+                                            String string = EntityUtils.toString(entity,"utf-8");
+                                            System.out.println(string);
+                                            response.close();
+                                            httpClient.close();
+
+                                            String content=readFile("C:\\Users\\Administrator\\Desktop\\idea_new\\netty-learning\\netty-http-server\\src\\main\\resources\\index.html");
                                             FullHttpResponse fullHttpResponse=new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,HttpResponseStatus.OK,
-                                                    Unpooled.copiedBuffer(readFile("C:\\Users\\Administrator\\Desktop\\idea_new\\netty-learning\\netty-http-server\\src\\main\\resources\\index.html"),CharsetUtil.UTF_8));
+                                                    Unpooled.copiedBuffer(string,CharsetUtil.UTF_8));
                                             fullHttpResponse.headers().set(HttpHeaderNames.CONTENT_TYPE,"text/html;charset=utf-8");
                                             ctx.writeAndFlush(fullHttpResponse).addListener(ChannelFutureListener.CLOSE);
                                         }
@@ -53,6 +72,24 @@ public class HttpServer {
         }
         return buffer.toString();
 
+    }
+
+    public void doGet()throws Exception {
+        //创建一个httpclient对象
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        //创建一个GET对象
+        HttpGet get =new HttpGet("http://www.baidu.com");
+        //执行请求
+        CloseableHttpResponse response =httpClient.execute(get);
+        //取响应的结果
+        int statusCode =response.getStatusLine().getStatusCode();
+        System.out.println(statusCode);
+        HttpEntity entity =response.getEntity();
+        String string = EntityUtils.toString(entity,"utf-8");
+        System.out.println(string);
+        //关闭httpclient
+        response.close();
+        httpClient.close();
     }
 }
 
