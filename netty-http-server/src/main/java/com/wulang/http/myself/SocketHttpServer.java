@@ -24,18 +24,36 @@ public class SocketHttpServer {
         while(true){
             Socket socket = serverSocket.accept();
             System.out.println(count++);
+            new Thread(new SocketThread(socket)).start();
+        }
+    }
+}
+class SocketThread implements Runnable{
+    private Socket socket;
+
+    public SocketThread(Socket socket){
+        this.socket=socket;
+    }
+
+    @Override
+    public void run() {
+        try {
             OutputStream outputStream=socket.getOutputStream();
             InputStream inputStream=socket.getInputStream();
             byte b[]=new byte[1024];
             inputStream.read(b);
             System.out.println(new String(b));
-            PrintWriter printWriter=new PrintWriter(outputStream,true);
+            BufferedWriter bufferedWriter=new BufferedWriter(new OutputStreamWriter(outputStream));
+//            PrintWriter printWriter=new PrintWriter(outputStream,true);
             String html="<!DOCTYPE html><html><head><title>浪哥</title></head><body><h4>浪哥流弊</h4></body></html>";
             String response="HTTP/1.1 200 ok\n"+"content-type:text/html;charset=utf-8\n"+"\n"+html;
-            printWriter.print(response);
-            printWriter.close();
-            socket.close();
+            bufferedWriter.write(response);
+            bufferedWriter.flush();
+//            printWriter.print(response);
+//            printWriter.close();
+
+        }catch (Exception e){
+
         }
     }
 }
-
