@@ -17,6 +17,7 @@ public class EchoServer {
     public EchoServer(int port) {
         this.port = port;
     }
+
     public static void main(String[] args) throws Exception {
         new EchoServer(6666).start();                //2
     }
@@ -32,8 +33,9 @@ public class EchoServer {
                         @Override
                         public void initChannel(SocketChannel ch)
                                 throws Exception {
-                            ch.pipeline().addLast(
-                                    new EchoServerHandler());
+                            ch.pipeline()
+                                    .addLast(new EchoServerHandler("001"))
+                                    .addLast(new EchoServerHandler("002"));
                         }
                     });
 

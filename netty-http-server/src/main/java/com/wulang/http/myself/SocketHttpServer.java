@@ -46,9 +46,11 @@ class SocketThread implements Runnable{
             BufferedWriter bufferedWriter=new BufferedWriter(new OutputStreamWriter(outputStream));
 //            PrintWriter printWriter=new PrintWriter(outputStream,true);
             String html="<!DOCTYPE html><html><head><title>浪哥</title></head><body><h4>浪哥流弊</h4></body></html>";
-            String response="HTTP/1.1 200 ok\n"+"content-type:text/html;charset=utf-8\n"+"\n"+html;
+            String response="HTTP/1.1 404 ok\n"+"content-type:text/html;charset=utf-8\n"+"\n"+html;
             bufferedWriter.write(response);
             bufferedWriter.flush();
+            outputStream.close();
+            inputStream.close();
 //            printWriter.print(response);
 //            printWriter.close();
 

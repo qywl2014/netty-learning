@@ -1,12 +1,12 @@
 package com.wulang.netty_learning.echo;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.EventLoopGroup;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.ReferenceCountUtil;
 
 import java.net.InetSocketAddress;
 
@@ -31,19 +31,26 @@ public class EchoClient {
                         @Override
                         public void initChannel(SocketChannel ch)
                                 throws Exception {
-                            ch.pipeline().addLast(
-                                    new EchoClientHandler());
-                        }
+                            ch.pipeline()
+                                    .addLast(new EchoClientOutBoundHandler("out001"))
+                                    .addLast(new EchoClientOutBoundHandler("out002"))
+                                    .addLast(new EchoClientHandler());
+                         }
                     });
 
-            ChannelFuture f = b.connect().sync();        //6
+            final ChannelFuture f = b.connect().sync();        //6
+//            Channel channel=f.channel();
+//            ByteBuf byteBuf=channel.alloc().buffer(4);
+//            byteBuf.writeBytes("channal send".getBytes());
+
             f.channel().closeFuture().sync();            //7
         } finally {
-            group.shutdownGracefully().sync();            //8
+//            group.shutdownGracefully().sync();            //8
         }
     }
 
     public static void main(String[] args) throws Exception {
         new EchoClient("localhost", 6666).start();
+//        new EchoClient("localhost", 6666).start();
     }
 }
