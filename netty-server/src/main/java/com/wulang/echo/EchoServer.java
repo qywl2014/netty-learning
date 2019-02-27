@@ -39,8 +39,12 @@ public class EchoServer {
                         }
                     });
 
+            // Bind and start to accept incoming connections.
             ChannelFuture f = b.bind().sync();            //8
-            System.out.println(EchoServer.class.getName() + " started and listen on " + f.channel().localAddress());
+//            System.out.println(EchoServer.class.getName() + " started and listen on " + f.channel().localAddress());
+            // Wait until the server socket is closed.
+            // In this example, this does not happen, but you can do that to gracefully
+            // shut down your server.
             f.channel().closeFuture().sync();            //9
         } finally {
             group.shutdownGracefully().sync();            //10
