@@ -2,6 +2,7 @@ package com.wulang.oio_learning;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -10,6 +11,8 @@ public class OIO_Server {
         ServerSocket serverSocket = new ServerSocket(6666);
         while(true){
             final Socket clientSocket = serverSocket.accept();
+            InetAddress inetAddress=clientSocket.getInetAddress();
+            System.out.println("---"+clientSocket.getLocalPort());
             System.out.println("accept connect from"+clientSocket);
             new Thread(new Runnable() {
                 @Override
