@@ -6,12 +6,27 @@ import java.util.Scanner;
 
 public class OIO_Client {
     public static void main(String[] args) throws Exception {
-        Socket socket=new Socket("127.0.0.1",6666);
+        Socket socket=new Socket("127.0.0.1",1234);
         InputStream inputStream=socket.getInputStream();
+        readByOthers(inputStream);
+    }
+
+    public static void readByScanner(InputStream inputStream){
         Scanner scanner=new Scanner(inputStream);
+        System.out.println("1");
         while (scanner.hasNext()){
+            System.out.println(2);
             System.out.println(scanner.nextLine());
+            System.out.println(3);
         }
+        scanner.close();
+    }
+
+    public static void readByOthers(InputStream inputStream) throws Exception{
+        byte[] response=new byte[1024];
+        inputStream.read(response);
+        System.out.println(new String(response));
+        inputStream.close();
     }
 }
 

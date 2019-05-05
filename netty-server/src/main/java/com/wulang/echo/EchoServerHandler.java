@@ -1,6 +1,7 @@
 package com.wulang.echo;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
@@ -16,6 +17,14 @@ public class EchoServerHandler extends
 
     public EchoServerHandler(String name){
         this.name=name;
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        ByteBuf byteBuf=ctx.alloc().buffer();
+        byteBuf.writeBytes("nihao\n666".getBytes());
+        ctx.writeAndFlush(byteBuf);
+        super.channelActive(ctx);
     }
 
     @Override
