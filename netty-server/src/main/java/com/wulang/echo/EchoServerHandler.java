@@ -14,6 +14,8 @@ public class EchoServerHandler extends
 
     private String name;
 
+    private int a=1;
+
     public EchoServerHandler(String name){
         this.name=name;
     }
@@ -23,7 +25,15 @@ public class EchoServerHandler extends
                             Object msg) {
 //        ByteBuf in = (ByteBuf) msg;
         System.out.println(this.name +" Server received: " + ((ByteBuf) msg).toString(CharsetUtil.UTF_8));//2
-        ctx.fireChannelRead(msg);
+//        ctx.fireChannelRead(msg);
+        if(name.equals("001")){
+            ctx.fireChannelRead(msg);
+            return ;
+        }
+        if(name.equals("002")&&a==1){
+            a--;
+            ctx.pipeline().fireChannelRead(msg);
+        }
 //        ctx.write(in);
 //        ctx.flush();         //3
     }

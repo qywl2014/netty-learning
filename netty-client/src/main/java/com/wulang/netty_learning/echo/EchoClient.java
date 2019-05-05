@@ -33,8 +33,8 @@ public class EchoClient {
                                 throws Exception {
                             ch.pipeline()
                                     .addLast(new EchoClientOutBoundHandler("out001"))
-                                    .addLast(new EchoClientOutBoundHandler("out002"))
-                                    .addLast(new EchoClientHandler());
+                                    .addLast(new EchoClientHandler())
+                                    .addLast(new EchoClientOutBoundHandler("out002"));
                          }
                     });
 
@@ -50,7 +50,7 @@ public class EchoClient {
     }
 
     public static void main(String[] args) throws Exception {
-        new EchoClient("localhost", 6666).start();
+        new EchoClient("localhost", 333).start();
 //        new EchoClient("localhost", 6666).start();
     }
 }

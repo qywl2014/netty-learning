@@ -13,7 +13,7 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
     public void channelActive(ChannelHandlerContext ctx) {
         final ByteBuf time = ctx.alloc().buffer(4); // (2)
         time.writeBytes("hello".getBytes());
-
+//        ctx.channel().write(time);
         ctx.writeAndFlush(time);
     }
 
