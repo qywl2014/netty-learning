@@ -19,18 +19,13 @@
     <!--<dependency>-->
       <!--<groupId>io.netty</groupId>-->
       <!--<artifactId>netty-all</artifactId>-->
-      <!--<version>4.1.26.Final</version>-->
+      <!--<version>4.0.42.Final</version>-->
     <!--</dependency>-->
     <dependency>
       <groupId>io.netty</groupId>
-      <artifactId>netty-all</artifactId>
+      <artifactId>netty-handler</artifactId>
       <version>4.0.42.Final</version>
     </dependency>
-    <!--<dependency>-->
-      <!--<groupId>io.netty</groupId>-->
-      <!--<artifactId>netty-all</artifactId>-->
-      <!--<version>5.0.0.Alpha2</version>-->
-    <!--</dependency>-->
   </dependencies>
   <name>netty-learning</name>
 </project>

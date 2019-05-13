@@ -2,7 +2,6 @@ package com.wulang.echo.oldiowithnetty;
 
 import com.wulang.echo.EchoServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.oio.OioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -21,6 +20,9 @@ public class OldIOServer {
                     }
                 });
         b.bind();
+        while (true){
+            Thread.sleep(2000);
+        }
 //        f.channel().closeFuture().sync();
     }
 }
