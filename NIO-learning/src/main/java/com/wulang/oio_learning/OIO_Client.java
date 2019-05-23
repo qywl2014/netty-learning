@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class OIO_Client {
     public static void main(String[] args) throws Exception {
-        Socket socket=new Socket(InetAddress.getByName("127.0.0.1"),1234,InetAddress.getByName("127.0.0.1"),4321);
+        Socket socket=new Socket("127.0.0.1",1234);
         final InputStream inputStream=socket.getInputStream();
         final OutputStream outputStream=socket.getOutputStream();
         OIO_Util.chat(inputStream,outputStream);

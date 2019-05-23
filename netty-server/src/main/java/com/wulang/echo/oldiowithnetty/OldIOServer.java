@@ -3,6 +3,7 @@ package com.wulang.echo.oldiowithnetty;
 import com.wulang.echo.EchoServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.oio.OioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.oio.OioServerSocketChannel;
@@ -13,6 +14,8 @@ public class OldIOServer {
         b.group(new OioEventLoopGroup())
                 .channel(OioServerSocketChannel.class)
                 .localAddress(1234)
+                .option(ChannelOption.SO_TIMEOUT,0)
+                .childOption(ChannelOption.SO_TIMEOUT,0)
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch){

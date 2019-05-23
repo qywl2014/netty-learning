@@ -2,6 +2,7 @@ package com.wulang;
 
 import static org.junit.Assert.assertTrue;
 
+import io.netty.channel.oio.OioEventLoopGroup;
 import org.junit.Test;
 
 /**
@@ -15,6 +16,6 @@ public class AppTest
     @Test
     public void shouldAnswerWithTrue()
     {
-        assertTrue( true );
+        OioEventLoopGroup oioEventLoopGroup=new OioEventLoopGroup();
     }
 }

@@ -3,6 +3,7 @@ package com.wulang.echo;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -28,7 +29,8 @@ public class EchoServer {
             ServerBootstrap b = new ServerBootstrap();
             b.group(group)                                //4
                     .channel(NioServerSocketChannel.class)        //5
-                    .localAddress(new InetSocketAddress(port))    //6
+                    .localAddress(new InetSocketAddress(port))
+                    .option(ChannelOption.SO_TIMEOUT,0)//6
                     .childHandler(new ChannelInitializer<SocketChannel>() { //7
                         @Override
                         public void initChannel(SocketChannel ch)
