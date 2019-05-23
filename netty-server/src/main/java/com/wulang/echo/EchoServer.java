@@ -48,9 +48,9 @@ public class EchoServer {
             // In this example, this does not happen, but you can do that to gracefully
             // shut down your server.
 
-            f.channel().closeFuture().sync();//9 这句必须要，否则会直接停止程序
+//            f.channel().closeFuture().sync();//9 这句注释，下一句没注释会导致程序shutdown
         } finally {
-            group.shutdownGracefully().sync();            //10
+//            group.shutdownGracefully().sync();            //10
         }
     }
 
