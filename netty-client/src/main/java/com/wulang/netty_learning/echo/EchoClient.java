@@ -32,9 +32,9 @@ public class EchoClient {
                         public void initChannel(SocketChannel ch)
                                 throws Exception {
                             ch.pipeline()
-                                    .addLast(new EchoClientOutBoundHandler("out001"))
-                                    .addLast(new EchoClientHandler())
-                                    .addLast(new EchoClientOutBoundHandler("out002"));
+//                                    .addLast(new EchoClientOutBoundHandler("out001"))
+                                    .addLast(new EchoClientHandler());
+//                                    .addLast(new EchoClientOutBoundHandler("out002"));
                          }
                     });
 

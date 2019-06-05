@@ -14,6 +14,9 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
         final ByteBuf time = ctx.alloc().buffer(4); // (2)
         time.writeBytes("hello".getBytes());
 //        ctx.channel().write(time);
+        ctx.write("he123");
+        ctx.write(time);
+        ctx.write("he123");
         ctx.writeAndFlush(time);
     }
 

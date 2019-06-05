@@ -24,16 +24,9 @@ public class EchoServerHandler extends
     public void channelRead(ChannelHandlerContext ctx,
                             Object msg) {
 //        ByteBuf in = (ByteBuf) msg;
+        System.out.println(msg);
         System.out.println(this.name +" Server received: " + ((ByteBuf) msg).toString(CharsetUtil.UTF_8));//2
 //        ctx.fireChannelRead(msg);
-        if(name.equals("001")){
-            ctx.fireChannelRead(msg);
-            return ;
-        }
-        if(name.equals("002")&&a==1){
-            a--;
-            ctx.pipeline().fireChannelRead(msg);
-        }
 //        ctx.write(in);
 //        ctx.flush();         //3
     }
