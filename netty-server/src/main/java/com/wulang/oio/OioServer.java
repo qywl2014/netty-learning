@@ -1,28 +1,16 @@
-package com.wulang.bio;
+package com.wulang.oio;
 
-import com.wulang.ServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.oio.OioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.oio.OioServerSocketChannel;
 
-public class BioServer {
-    private int port;
-
-    public BioServer(int port) {
-        this.port = port;
-    }
+public class OioServer {
 
     public static void main(String[] args) {
-        new BioServer(8379).run();
-    }
-
-
-    public void run() {
         EventLoopGroup bossGroup = new OioEventLoopGroup(); //用于处理服务器端接收客户端连接
         EventLoopGroup workerGroup = new OioEventLoopGroup(); //进行网络通信（读写）
         try {
@@ -32,11 +20,11 @@ public class BioServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() { //配置具体的数据处理方式
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            socketChannel.pipeline().addLast(new ServerHandler());
+                            socketChannel.pipeline().addLast(new OioServerHandler());
                         }
                     });
 //                    .childOption(ChannelOption.SO_KEEPALIVE, true); //保持连接
-            ChannelFuture future = bootstrap.bind(port).sync();
+            ChannelFuture future = bootstrap.bind(8379).sync();
             future.channel().closeFuture().sync();
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,4 +33,5 @@ public class BioServer {
             bossGroup.shutdownGracefully();
         }
     }
+
 }
