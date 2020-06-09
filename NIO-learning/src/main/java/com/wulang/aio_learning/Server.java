@@ -8,13 +8,13 @@ import java.nio.channels.CompletionHandler;
 
 public class Server {
     public static void main(String[] args) throws Exception {
-        final AsynchronousServerSocketChannel listener =
+        final AsynchronousServerSocketChannel serverSocketChannel =
                 AsynchronousServerSocketChannel.open().bind(new InetSocketAddress(5000));
 
-        listener.accept(null, new CompletionHandler<AsynchronousSocketChannel,Void>() {
+        serverSocketChannel.accept(null, new CompletionHandler<AsynchronousSocketChannel,Void>() {
             public void completed(AsynchronousSocketChannel ch, Void att) {
                 // accept the next connection
-                listener.accept(null, this);
+                serverSocketChannel.accept(null, this);
 
                 // handle this connection
                 handle(ch);
